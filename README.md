@@ -27,10 +27,13 @@ The library defines one class, the OptionParser class. The class constructor tak
 	var parser = new optparse.OptionParser(switches);
 	
 	// Hook the help option. The callback will be executed when the OptionParser 
-	// hits the switch ´´-h´´ or ´´--help´´. Each representatio
+	// hits the switch ´´-h´´ or ´´--help´´.
 	parser.on('help', function() {
 		sys.puts('Help');
 	});
+	
+	// Actually parse the arguments
+	parser.parse(process.argv);
 	
 
 
