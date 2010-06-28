@@ -1,9 +1,5 @@
 // Import the optparse script
-require.paths.unshift(__dirname); //make local paths accessible
-
-var optparse = require('lib/optparse');
-
-var sys= require('sys');
+var optparse = require('../lib/optparse'), sys = require('sys');
 
 // Define some options
 var SWITCHES = [
@@ -23,7 +19,7 @@ parser.banner = 'Usage: nodejs-test.js [options]';
 
 // Internal variable to store options.
 var options = {
-    debug: true,
+    debug: false,
     files: [],
     number: undefined,
     date: undefined
@@ -35,22 +31,22 @@ parser.on(0, function(value) {
 });
 
 // Handle the --include-file switch
-parser.on('include-file', function(value) {
+parser.on('include-file', function(rule, value) {
     options.files.push(value);
 });
 
 // Handle the --print switch
-parser.on('print', function(value) {
+parser.on('print', function(rule, value) {
     sys.puts('PRINT: ' + (value || 'No message entered'));
 });
 
 // Handle the --date switch
-parser.on('date', function(value) {
+parser.on('date', function(rule, value) {
     options.date = value;
 });
 
 // Handle the --number switch
-parser.on('number', function(value) {
+parser.on('number', function(rule, value) {
     options.number = value;
 });
 
@@ -71,7 +67,7 @@ parser.on('*', function(opt, value) {
 });
 
 // Parse command line arguments
-parser.parse(process.ARGV);
+parser.parse(process.argv.slice(2));
 
 if(print_summary) {
     sys.puts("First non-switch argument is: " + first_arg);
